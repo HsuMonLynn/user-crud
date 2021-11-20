@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 
 /*
@@ -14,13 +15,18 @@ use App\Models\User;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [App\Http\Controllers\UserController::class, 'index']);
 
-Route::get('/', function () {
+Route::post('/userCreate',[App\Http\Controllers\UserController::class, 'create']);
 
-    return view('user',[
+    // $request->validate($request, [
+    //     'name' => 'required|max:255',
+    //     'email' => 'required',
+    // ]);
+    
 
-        'users' => User::all()
-    ]);
-});
+    
+    
+// });
 
 

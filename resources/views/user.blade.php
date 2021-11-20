@@ -4,7 +4,7 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-6">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#create-user-modal" onclick="add()">Create</button>
+                    <button id="btn-add" name="btn-add" class="btn btn-primary" data-toggle="modal" data-target="#create-user-modal">Create</button>
                 </div>
                 <div class="col-6">
                     <div class="input-group mb-3">
@@ -57,7 +57,13 @@
                         </tbody>
                     </table>
                 <!-- Pagination -->
-                <nav class="mt-5">
+                <div class="row justify-content-start no-gutters px-3 pagination">
+                    @isset($users)
+                    {{ $users->appends(request()->query())->links('pagination::bootstrap-4') }}
+                    @endisset
+                </div>
+                {{-- <div class="pagination">{{ $users->links() }}</div> --}}
+                {{-- <nav class="mt-5">
                     <ul class="pagination">
                         <li class="page-item disabled">
                             <a class="page-link">Previous</a>
@@ -72,11 +78,13 @@
                         </li>
                     </ul>
                 </nav>
-            </div>
+            </div> --}}
             <!-- .col-12 -->
+            
         </div>
+        
     </div>
-
+    
     <!-- Create User Modal-->
     <div class="modal fade" id="create-user-modal">
         <div class="modal-dialog">
@@ -91,23 +99,30 @@
                     <form>
                         <div class="form-group">
                             <label class="col-form-label">Name:</label>
-                            <input type="text" class="form-control is-invalid" />
-                            <div class="invalid-feedback">
-                                The name is required.
-                            </div>
+                            <input type="text" class="form-control" id="name" name="name"  
+                                @error('name')is-invalid @enderror/>
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        The name is required.
+                                    </div> 
+                                @enderror
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Email:</label>
-                            <input type="email" class="form-control is-invalid" />
-                            <div class="invalid-feedback">
-                                The email is required.
-                            </div>
+                            <input type="email" class="form-control" id="email" name="email" 
+                            @error('email')
+                            is-invalid @enderror/>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    The email is required.
+                                </div> 
+                            @enderror
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-primary" id="btn-create" name="btn-create">Create</button>
                 </div>
             </div>
         </div>
