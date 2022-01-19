@@ -8,54 +8,15 @@
                 </div>
                 <div class="col-6">
                     <div class="input-group mb-3">
-                        <input type="search" class="form-control" placeholder="Search..." />
+                        <input type="search" class="form-control" id="search" placeholder="Search..." />
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">Search</button>
+                            <button class="btn btn-primary" type="button" onclick="search()" >Search</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 mt-3">
-                    <table class="table table-striped" id="user-list-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="users-list" name="users-list">
-                            @foreach($users as $user)
-                            <tr>
-                                <th scope="row">{{$user->id}}</th>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->created_at}}</td>
-                                <td>
-                                    <div class="actions">
-                                        <button
-                                            class="btn btn-success"
-                                            data-toggle="modal"
-                                            data-target="#edit-user-modal"
-                                            value="{{$user->id}}"
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            class="btn btn-danger ml-2"
-                                            data-toggle="modal"
-                                            data-target="#delete-user-modal"
-                                            value="{{$user->id}}"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="col-12 mt-3" id="user-list-table"></div>
+                <!-- .col-12 -->
+                    
                 <!-- Pagination -->
                 <div class="row justify-content-start no-gutters px-3 pagination">
                     @isset($users)
@@ -122,7 +83,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btn-create" name="btn-create">Create</button>
+                    <button type="button" class="btn btn-primary" id="btn-create" name="btn-create" onclick="store()">Create</button>
                 </div>
             </div>
         </div>
