@@ -15,32 +15,6 @@
                     </div>
                 </div>
                 <div class="col-12 mt-3" id="user-list-table"></div>
-                <!-- .col-12 -->
-                    
-                <!-- Pagination -->
-                <div class="row justify-content-start no-gutters px-3 pagination">
-                    @isset($users)
-                    {{ $users->appends(request()->query())->links('pagination::bootstrap-4') }}
-                    @endisset
-                </div>
-                {{-- <div class="pagination">{{ $users->links() }}</div> --}}
-                {{-- <nav class="mt-5">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div> --}}
-            <!-- .col-12 -->
             
         </div>
         
@@ -60,30 +34,21 @@
                     <form>
                         <div class="form-group">
                             <label class="col-form-label">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name"  
-                                @error('name')is-invalid @enderror/>
-                                @error('name')
-                                    <div class="invalid-feedback">
-                                        The name is required.
-                                    </div> 
-                                @enderror
+                            <input type="text" class="form-control" id="create-name"/>
+                            <div class="invalid-feedback" id="create-name-error">
+                            </div> 
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" 
-                            @error('email')
-                            is-invalid @enderror/>
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    The email is required.
-                                </div> 
-                            @enderror
+                            <input type="email" class="form-control" id="create-email" />
+                            <div class="invalid-feedback" id="create-email-error">
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="btn-create" name="btn-create" onclick="store()">Create</button>
+                    <button type="button" class="btn btn-primary" onclick="store()">Create</button>
                 </div>
             </div>
         </div>
@@ -102,25 +67,26 @@
                 </div>
                 <div class="modal-body">
                     <form>
+                    <input type="hidden" id="edit-id">
                         <div class="form-group">
                             <label class="col-form-label">Name:</label>
-                            <input type="text" class="form-control is-invalid" />
-                            <div class="invalid-feedback">
-                                The name is required.
+                            <input type="text" class="form-control" id="edit-name"/>
+                            <div class="invalid-feedback" id="edit-name-error">
+                                
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Email:</label>
-                            <input type="email" class="form-control is-invalid" />
-                            <div class="invalid-feedback">
-                                The email is required.
+                            <input type="email" class="form-control" id="edit-email"/>
+                            <div class="invalid-feedback" id="edit-email-error">
+                               
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-primary" onclick="update()">Update</button>
                 </div>
             </div>
         </div>
@@ -138,11 +104,12 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="delete-id">
                     <p>Are you sure to delete a user?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteUser()">Delete</button>
                 </div>
             </div>
         </div>

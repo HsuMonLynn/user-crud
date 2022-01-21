@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\UserStoreRequest;
-
+use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function index()
   {
-    // $users = User::latest()->paginate(8);
-    // return view('user', compact('users'));
     return view('user');
   }
 
@@ -21,7 +20,8 @@ class UserController extends Controller
       $query->where('name', 'like', '%' . $search . '%')
           ->orWhere('email', 'LIKE', '%' . $search . '%')
           ->orWhere('id', 'LIKE', '%' . $search . '%');
-      })->get();
+      })->orderBy('id','DESC')->paginate(10);
+     
     return view('_table',compact('users'));
   }
 
@@ -33,15 +33,30 @@ class UserController extends Controller
     $user->password = Hash::make('password');
     $user->save();
     return response()->json(['data' => $user], 200);
-    // $user = User::create(
-    //     [
-    //         'name' => $request->name, 
-    //         'email' => $request->email,                
-    //         'password' => "password"
-    //     ]); 
         
-    //     return Response::json($user);
-        
-    }      
+  }
+
+  // public function edit($id){
+  //   $user = User::FindorFail($id);
+  //   return response()->json($user);
+  // }
+
+  public function update(UserUpdateRequest $request,$id)  {
+
+    $user = User::findOrFail($id);
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->password = Hash::make('password');
+    $user->update();
+    return response()->json(['data' => $user], 200);
+  } 
+  
+  public function destroy($id){
+
+    $user = User::findOrFail($id);
+    $user->delete();
+    return response()->json(['data' => $user], 200);
+    
+  }
     
 }

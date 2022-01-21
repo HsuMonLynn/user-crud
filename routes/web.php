@@ -19,6 +19,8 @@ use App\Http\Controllers\UserController;
 Route::get('/', [UserController::class, 'index']);
 Route::get('all-users',[UserController::class, 'getUser']);
 Route::post('/',[UserController::class, 'store']);
+Route::put('/{id}',[UserController::class, 'update']);
+Route::delete('/{id}',[UserController::class, 'destroy']);
 
     // $request->validate($request, [
     //     'name' => 'required|max:255',
