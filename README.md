@@ -6,7 +6,9 @@ Clone the repo locally:
 
 ```
 git clone https://github.com/HsuMonLynn/laravel-spa-crud-using-jquery.git
+```
 
+```
 cd laravel-spa-crud-using-jquery
 ```
 
