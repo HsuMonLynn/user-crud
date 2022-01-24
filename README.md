@@ -75,10 +75,10 @@ Visit `localhost:8000` in your browser and login with:
 ![User Edit]((./public/photos/user-edit.png)
 
 ## User Delete
-![User delete]((./public/photos/user-delete.png)
+![User Delete]((./public/photos/user-delete.png)
 
 ## User Search
-![User search]((./public/photos/user-search.png)
+![User Search]((./public/photos/user-search.png)
 
 ## User Pagination
-![User pagination]((./public/photos/user-paginate.png)
+![User Pagination]((./public/photos/user-paginate.png)
