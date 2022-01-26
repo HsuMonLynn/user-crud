@@ -31,17 +31,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="form-data" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="col-form-label">Name:</label>
-                            <input type="text" class="form-control" id="create-name"/>
+                            <input type="text" class="form-control" id="create-name" name=""/>
                             <div class="invalid-feedback" id="create-name-error">
                             </div> 
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Email:</label>
-                            <input type="email" class="form-control" id="create-email" />
+                            <input type="email" class="form-control" id="create-email" name=""/>
                             <div class="invalid-feedback" id="create-email-error">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <img src=""
+                                    alt="" width="100" height="100" class="mb-3 ml-3" id="create-preview-img">
+                            <input type="file" name="" id="create-image"
+                                class="form-control-file">
+                                <div class="invalid-feedback" id="create-image-error">
                             </div>
                         </div>
                     </form>
@@ -66,21 +74,33 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form enctype="multipart/form-data">
                     <input type="hidden" id="edit-id">
+                    <input type="hidden" id="hidden-edit-img">
                         <div class="form-group">
                             <label class="col-form-label">Name:</label>
-                            <input type="text" class="form-control" id="edit-name"/>
+                            <input type="text" class="form-control" id="edit-name" name=""/>
                             <div class="invalid-feedback" id="edit-name-error">
                                 
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Email:</label>
-                            <input type="email" class="form-control" id="edit-email"/>
+                            <input type="email" class="form-control" id="edit-email" name=""/>
                             <div class="invalid-feedback" id="edit-email-error">
                                
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <img    src=" "
+                                    alt="" 
+                                    width="100" 
+                                    height="100" 
+                                    class="mb-3 ml-3" 
+                                    id="edit-preview-img">
+                            <input type="file" name="edit-photo" id="edit-image" name=""
+                                class="form-control-file">
+                            <div class="invalid-feedback" id="edit-image-error">
                         </div>
                     </form>
                 </div>

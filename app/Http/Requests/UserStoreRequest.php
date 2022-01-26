@@ -24,7 +24,8 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'name'=>'required|string|max:255',                      
-            'email'=>'required|unique:users|email'
+            'email'=>'required|unique:users|email',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,jfif|max:2048',
         ];
     }
 }

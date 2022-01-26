@@ -20,19 +20,37 @@ function search(){
         document.querySelector('#user-list-table').innerHTML = html;
     });
 }
+// create preview image
+$('#create-image').change(function(){
+           
+    let reader = new FileReader();
+
+    reader.onload = (e) => { 
+
+      $('#create-preview-img').attr('src', e.target.result); 
+    }
+
+    reader.readAsDataURL(this.files[0]); 
+  
+});
+
 // create user
 function store(){
-    
-    var name = $("#create-name").val();
-    var email = $("#create-email").val();
-    var formData = { name, email };
+
+    var myformData = new FormData();        
+    myformData.append('name', $("#create-name").val() || '');
+    myformData.append('email', $("#create-email").val() || '');
+    myformData.append('image', $('#create-image')[0].files[0] || '');
     
     $.ajax({
         type:'POST',
         url:'/',
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
-        data:formData,
         dataType: 'json',
+        cache:false,
+        contentType: false,
+        processData: false,
+        data: myformData,
         success:function(data){ 
             $('#create-user-modal').modal('hide');
             $(document.body).removeClass("modal-open");
@@ -51,6 +69,11 @@ function store(){
                 $('#create-email').addClass('is-invalid');
                 $('#create-email-error').text(response.responseJSON.errors.email);
             }
+
+            if(response.responseJSON.errors.image) {
+                $('#create-image').addClass('is-invalid');
+                $('#create-image-error').text(response.responseJSON.errors.image);
+            }
         }    
 
     })
@@ -62,28 +85,62 @@ function edit(el){
     var dataName = $(el).attr('data-name');
     $("#edit-name").val(dataName);
     var dataEmail = $(el).attr('data-email');
-    $("#edit-email").val(dataEmail);  
+    $("#edit-email").val(dataEmail); 
+    var dataImgSrc = $(el).attr('data-img-src');
+    $("#edit-preview-img").attr('src', dataImgSrc);
+    var dataImage = $(el).attr('data-image');
+    $("#hidden-edit-img").val(dataImage); 
+
 }
+// edit preview image
+$('#edit-image').change(function(){
+           
+    let reader = new FileReader();
+
+    reader.onload = (e) => { 
+
+      $('#edit-preview-img').attr('src', e.target.result); 
+    }
+
+    reader.readAsDataURL(this.files[0]); 
+  
+});
 // update user
 function update(){
     var id = $("#edit-id").val();
-    var name = $("#edit-name").val();
-    var email = $("#edit-email").val();
-    var formData = { name, email };
+    // let name = $("#edit-name").val();
+    // let email = $("#edit-email").val();
+    // let image = $("#edit-image")[0].files[0];
+    // let updateData ={ 
+    //     name:name,
+    //     email:email,
+    //     image:image
+    // };
+    const formData = new FormData(); 
 
+    formData.append('name', $("#edit-name").val() || '');
+    formData.append('email', $("#edit-email").val() || '');
+    formData.append('image', $('#edit-image')[0].files[0] || '');
+    console.log($("#edit-name").val());
     $.ajax({
         type:'PUT',
-        url: '/' + id,    
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
-        data:formData,
+        url: '/users/' + id,    
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content') },
+        data: formData,
         dataType: 'json',
+        cache:false,
+        contentType: false,
+        processData: false,
+       
         success:function(data){ 
+             
             $('#edit-user-modal').modal('hide');
             $(document.body).removeClass("modal-open");
             $(".modal-backdrop").remove();
             getUser();                     
         },
         error: function (response) {
+            console.log(response.responseJSON);
             if(response.responseJSON.errors.name) {
                 $('#edit-name').addClass('is-invalid');
                 $('#edit-name-error').text(response.responseJSON.errors.name);
@@ -92,6 +149,11 @@ function update(){
             if(response.responseJSON.errors.email) {
                 $('#edit-email').addClass('is-invalid');
                 $('#edit-email-error').text(response.responseJSON.errors.email);
+            }
+
+            if(response.responseJSON.errors.image) {
+                $('#edit-image').addClass('is-invalid');
+                $('#edit-image-error').text(response.responseJSON.errors.image);
             }
         }  
     })
