@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Response;
 use App\Http\Requests\UserStoreRequest;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -52,8 +51,8 @@ class UserController extends Controller
   //   return response()->json($user);
   // }
 
-  public function update(Request $request,$id)  {
-    Log::info($request);
+  public function update(UserUpdateRequest $request,$id)  {
+ 
     $user = User::findOrFail($id);
     $user->name = $request->name;
     $user->email = $request->email;

@@ -20,6 +20,20 @@ function search(){
         document.querySelector('#user-list-table').innerHTML = html;
     });
 }
+// create reset
+function createReset() {
+    $('#create-name').val('');
+    $('#create-name').removeClass('is-invalid');
+ 
+    $('#create-email').val('');
+    $('#create-email').removeClass('is-invalid');
+
+    $('#create-image').val('');
+    $('#create-image').removeClass('is-invalid');
+    
+    $('#create-preview-img').removeAttr('src');
+}
+
 // create preview image
 $('#create-image').change(function(){
            
@@ -33,6 +47,14 @@ $('#create-image').change(function(){
     reader.readAsDataURL(this.files[0]); 
   
 });
+// create user model
+function create(e) {
+    e.preventDefault();
+
+    createReset();
+
+    $('create-user-modal').modal('show');
+}
 
 // create user
 function store(){
@@ -54,9 +76,7 @@ function store(){
         success:function(data){ 
             $('#create-user-modal').modal('hide');
             $(document.body).removeClass("modal-open");
-            $(".modal-backdrop").remove();
-            $('#create-name').val('');
-            $('#create-email').val('');
+            $(".modal-backdrop").remove(); 
             getUser();                     
         },
         error: function (response) {
@@ -78,8 +98,22 @@ function store(){
 
     })
 }
+// edit reset
+function editReset() {
+    $('#edit-name').val('');
+    $('#edit-name').removeClass('is-invalid');
+ 
+    $('#edit-email').val('');
+    $('#edit-email').removeClass('is-invalid');
+
+    $('#edit-image').val('');
+    $('#edit-image').removeClass('is-invalid');
+    
+    $('#edit-preview-img').removeAttr('src');
+}
 // edit user
 function edit(el){
+    editReset();
     var dataId = $(el).attr('data-id');
     $("#edit-id").val(dataId);
     var dataName = $(el).attr('data-name');
@@ -108,30 +142,22 @@ $('#edit-image').change(function(){
 // update user
 function update(){
     var id = $("#edit-id").val();
-    // let name = $("#edit-name").val();
-    // let email = $("#edit-email").val();
-    // let image = $("#edit-image")[0].files[0];
-    // let updateData ={ 
-    //     name:name,
-    //     email:email,
-    //     image:image
-    // };
-    const formData = new FormData(); 
 
-    formData.append('name', $("#edit-name").val() || '');
-    formData.append('email', $("#edit-email").val() || '');
-    formData.append('image', $('#edit-image')[0].files[0] || '');
-    console.log($("#edit-name").val());
+    var myformData = new FormData();        
+    myformData.append('name', $("#edit-name").val() || '');
+    myformData.append('email', $("#edit-email").val() || '');
+    myformData.append('image', $('#edit-image')[0].files[0] || '');
+    myformData.append('_method', 'POST');
+    
     $.ajax({
-        type:'PUT',
-        url: '/users/' + id,    
+        type:'POST',
+        url: 'users/' + id,    
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content') },
-        data: formData,
         dataType: 'json',
         cache:false,
         contentType: false,
         processData: false,
-       
+        data: myformData,
         success:function(data){ 
              
             $('#edit-user-modal').modal('hide');
@@ -140,7 +166,6 @@ function update(){
             getUser();                     
         },
         error: function (response) {
-            console.log(response.responseJSON);
             if(response.responseJSON.errors.name) {
                 $('#edit-name').addClass('is-invalid');
                 $('#edit-name-error').text(response.responseJSON.errors.name);

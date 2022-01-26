@@ -4,7 +4,7 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-6">
-                    <button id="btn-add" name="btn-add" class="btn btn-primary" data-toggle="modal" data-target="#create-user-modal">Create</button>
+                    <button  name="btn-add" class="btn btn-primary" data-toggle="modal" data-target="#create-user-modal" onclick="create(event)">Create</button>
                 </div>
                 <div class="col-6">
                     <div class="input-group mb-3">
@@ -74,7 +74,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form enctype="multipart/form-data">
+                    <form enctype="multipart/form-data" id="edit-form">
                     <input type="hidden" id="edit-id">
                     <input type="hidden" id="hidden-edit-img">
                         <div class="form-group">
