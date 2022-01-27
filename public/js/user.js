@@ -91,39 +91,7 @@ function store(){
             }
         }
     })
-    // $.ajax({
-    //     type:'POST',
-    //     url:'/',
-    //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
-    //     dataType: 'json',
-    //     cache:false,
-    //     contentType: false,
-    //     processData: false,
-    //     data: myformData,
-    //     success:function(data){ 
-    //         $('#create-user-modal').modal('hide');
-    //         $(document.body).removeClass("modal-open");
-    //         $(".modal-backdrop").remove(); 
-    //         getUser();                     
-    //     },
-    //     error: function (response) {
-    //         if(response.responseJSON.errors.name) {
-    //             $('#create-name').addClass('is-invalid');
-    //             $('#create-name-error').text(response.responseJSON.errors.name);
-    //         }
-      
-    //         if(response.responseJSON.errors.email) {
-    //             $('#create-email').addClass('is-invalid');
-    //             $('#create-email-error').text(response.responseJSON.errors.email);
-    //         }
-
-    //         if(response.responseJSON.errors.image) {
-    //             $('#create-image').addClass('is-invalid');
-    //             $('#create-image-error').text(response.responseJSON.errors.image);
-    //         }
-    //     }    
-
-    // })
+    
 }
 
 // edit reset
@@ -205,39 +173,6 @@ function update(){
         }
     })
 
-    // $.ajax({
-    //     type:'POST',
-    //     url: 'users/' + id,    
-    //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content') },
-    //     dataType: 'json',
-    //     cache:false,
-    //     contentType: false,
-    //     processData: false,
-    //     data: myformData,
-    //     success:function(data){ 
-             
-    //         $('#edit-user-modal').modal('hide');
-    //         $(document.body).removeClass("modal-open");
-    //         $(".modal-backdrop").remove();
-    //         getUser();                     
-    //     },
-    //     error: function (response) {
-    //         if(response.responseJSON.errors.name) {
-    //             $('#edit-name').addClass('is-invalid');
-    //             $('#edit-name-error').text(response.responseJSON.errors.name);
-    //         }
-
-    //         if(response.responseJSON.errors.email) {
-    //             $('#edit-email').addClass('is-invalid');
-    //             $('#edit-email-error').text(response.responseJSON.errors.email);
-    //         }
-
-    //         if(response.responseJSON.errors.image) {
-    //             $('#edit-image').addClass('is-invalid');
-    //             $('#edit-image-error').text(response.responseJSON.errors.image);
-    //         }
-    //     }  
-    // })
 }
 //delete user
 function destroy(el){
@@ -255,17 +190,7 @@ function deleteUser(){
         $(".modal-backdrop").remove();
         getUser();
     })
-    // $.ajax({
-    //     type:'DELETE',
-    //     url:'/'+ id,
-    //     headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
-    //     success:function(data){
-    //         getUser();
-    //         $('#delete-user-modal').modal('hide');
-    //         $(document.body).removeClass("modal-open");
-    //         $(".modal-backdrop").remove();
-    //     }
-    // })
+
 }
 
 // pagination 
@@ -281,11 +206,5 @@ function fetchUser(page){
     .then(html => {
         document.querySelector('#user-list-table').innerHTML = html;
     });
-    // $.ajax({
-    //     url:"/all-users?page="+page,
-    //     success:function(data)
-    //     {
-    //         $('#user-list-table').html(data);
-    //     }
-    // });
+    
 }
