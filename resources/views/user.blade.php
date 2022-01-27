@@ -111,6 +111,7 @@
             </div>
         </div>
     </div>
+</div>
     <!-- End: Edit User Modal-->
 
     <!-- Delete User Modal-->
