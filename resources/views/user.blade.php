@@ -44,9 +44,13 @@
                             <div class="invalid-feedback" id="create-email-error">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div>
                             <img src=""
-                                    alt="" width="100" height="100" class="mb-3 ml-3" id="create-preview-img">
+                            alt="" 
+                            class="img-fluid" 
+                            id="create-preview-img">
+                        </div>
+                        <div class="form-group">
                             <input type="file" name="" id="create-image"
                                 class="form-control-file">
                                 <div class="invalid-feedback" id="create-image-error">
@@ -92,7 +96,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <img    src=" "
+                            <img    src=""
                                     alt="" 
                                     width="100" 
                                     height="100" 

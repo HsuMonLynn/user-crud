@@ -32,6 +32,7 @@ function createReset() {
     $('#create-image').removeClass('is-invalid');
     
     $('#create-preview-img').removeAttr('src');
+   
 }
 
 // create preview image
