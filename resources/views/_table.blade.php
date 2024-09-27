@@ -13,7 +13,7 @@
         @foreach($users as $user)
             <tr>
                 <th scope="row">{{ $user->id }}</th>
-                <td style="width: 200px">
+                <td style="width: 200px; height:80px;">
                     <img src="{{ Storage::url($user->image, 'public') }}"
                         alt="{{ $user->name }}"
                         class="img-fluid">

@@ -32,6 +32,7 @@ function createReset() {
     $('#create-image').removeClass('is-invalid');
     
     $('#create-preview-img').removeAttr('src');
+   
 }
 
 // create preview image
@@ -63,41 +64,37 @@ function store(){
     myformData.append('name', $("#create-name").val() || '');
     myformData.append('email', $("#create-email").val() || '');
     myformData.append('image', $('#create-image')[0].files[0] || '');
-    
-    $.ajax({
-        type:'POST',
-        url:'/',
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
-        dataType: 'json',
-        cache:false,
-        contentType: false,
-        processData: false,
-        data: myformData,
-        success:function(data){ 
-            $('#create-user-modal').modal('hide');
-            $(document.body).removeClass("modal-open");
-            $(".modal-backdrop").remove(); 
-            getUser();                     
-        },
-        error: function (response) {
-            if(response.responseJSON.errors.name) {
-                $('#create-name').addClass('is-invalid');
-                $('#create-name-error').text(response.responseJSON.errors.name);
-            }
 
-            if(response.responseJSON.errors.email) {
-                $('#create-email').addClass('is-invalid');
-                $('#create-email-error').text(response.responseJSON.errors.email);
-            }
-
-            if(response.responseJSON.errors.image) {
-                $('#create-image').addClass('is-invalid');
-                $('#create-image-error').text(response.responseJSON.errors.image);
-            }
-        }    
-
+    axios.post('/', myformData)
+    .then(response => {
+        $('#create-user-modal').modal('hide');
+        $(document.body).removeClass("modal-open");
+        $(".modal-backdrop").remove();
+        getUser();
     })
+    .catch(error => {
+        if (error.response) {
+            let errors = error.response.data.errors;
+                    
+            if(errors.hasOwnProperty('name')) {
+                $('#create-name').addClass('is-invalid')
+                $('#create-name-error').text(errors.name[0])
+            }
+
+            if(errors.hasOwnProperty('email')) {
+                $('#create-email').addClass('is-invalid')
+                $('#create-email-error').text(errors.email[0])
+            }
+
+            if(errors.hasOwnProperty('image')) {
+                $('#create-image').addClass('is-invalid')
+                $('#create-image-error').text(errors.image[0])
+            }
+        }
+    })
+    
 }
+
 // edit reset
 function editReset() {
     $('#edit-name').val('');
@@ -149,39 +146,34 @@ function update(){
     myformData.append('image', $('#edit-image')[0].files[0] || '');
     myformData.append('_method', 'POST');
     
-    $.ajax({
-        type:'POST',
-        url: 'users/' + id,    
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content') },
-        dataType: 'json',
-        cache:false,
-        contentType: false,
-        processData: false,
-        data: myformData,
-        success:function(data){ 
-             
-            $('#edit-user-modal').modal('hide');
-            $(document.body).removeClass("modal-open");
-            $(".modal-backdrop").remove();
-            getUser();                     
-        },
-        error: function (response) {
-            if(response.responseJSON.errors.name) {
-                $('#edit-name').addClass('is-invalid');
-                $('#edit-name-error').text(response.responseJSON.errors.name);
-            }
-
-            if(response.responseJSON.errors.email) {
-                $('#edit-email').addClass('is-invalid');
-                $('#edit-email-error').text(response.responseJSON.errors.email);
-            }
-
-            if(response.responseJSON.errors.image) {
-                $('#edit-image').addClass('is-invalid');
-                $('#edit-image-error').text(response.responseJSON.errors.image);
-            }
-        }  
+    axios.post('users/'+id, myformData)
+    .then(response => {
+        $('#edit-user-modal').modal('hide');
+        $(document.body).removeClass("modal-open");
+        $(".modal-backdrop").remove();
+        getUser();
     })
+    .catch(error => {
+        if (error.response) {
+            let errors = error.response.data.errors;
+                    
+            if(errors.hasOwnProperty('name')) {
+                $('#edit-name').addClass('is-invalid')
+                $('#edit-name-error').text(errors.name[0])
+            }
+
+            if(errors.hasOwnProperty('email')) {
+                $('#edit-email').addClass('is-invalid')
+                $('#edit-email-error').text(errors.email[0])
+            }
+
+            if(errors.hasOwnProperty('image')) {
+                $('#edit-image').addClass('is-invalid')
+                $('#edit-image-error').text(errors.image[0])
+            }
+        }
+    })
+
 }
 //delete user
 function destroy(el){
@@ -191,17 +183,15 @@ function destroy(el){
 }
 function deleteUser(){
     var id = $("#delete-id").val();
-    $.ajax({
-        type:'DELETE',
-        url:'/'+ id,
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
-        success:function(data){
-            getUser();
-            $('#delete-user-modal').modal('hide');
-            $(document.body).removeClass("modal-open");
-            $(".modal-backdrop").remove();
-        }
+
+    axios.delete('/'+id )
+    .then(response => {
+        $('#delete-user-modal').modal('hide');
+        $(document.body).removeClass("modal-open");
+        $(".modal-backdrop").remove();
+        getUser();
     })
+
 }
 
 // pagination 
@@ -211,11 +201,11 @@ $(document).on('click', '#pagination a', function(event){
    fetchUser(page);
    });
 function fetchUser(page){
-    $.ajax({
-        url:"/all-users?page="+page,
-        success:function(data)
-        {
-            $('#user-list-table').html(data);
-        }
+
+    let url = '/all-users?page='+page
+    fetch(url).then(response=>response.text())
+    .then(html => {
+        document.querySelector('#user-list-table').innerHTML = html;
     });
+    
 }
